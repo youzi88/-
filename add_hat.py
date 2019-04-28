@@ -118,18 +118,30 @@ def add_hat(img,hat_img):
 
             return img
 
+    else:
+        return img
+
    
 # 读取帽子图，第二个参数-1表示读取为rgba通道，否则为rgb通道
 hat_img = cv2.imread("hat2.png",-1)
 
 # 读取头像图
-img = cv2.imread("test.jpg")
-output = add_hat(img,hat_img)
+cam = cv2.VideoCapture(0)
+while True:
+    ret, img = cam.read()
 
-# 展示效果
-cv2.imshow("output",output )  
-cv2.waitKey(0)  
-cv2.imwrite("output.jpg",output)
+    if not ret:
+        break
+    cv2.imshow('I', img)
+    output = add_hat(img, hat_img)
+
+    # 展示效果
+    cv2.imshow("output",output)
+    if cv2.waitKey(32)==27:
+        break
+    if cv2.waitKey(32) == 115:
+        cv2.imwrite('havecat.jpg', output)
+
 # import glob as gb 
 
 # img_path = gb.glob("./images/*.jpg")
